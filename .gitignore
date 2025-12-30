@@ -1,0 +1,7 @@
+# Ignore datasets
+data/
+*.csv
+
+# Ignore system files
+__pycache__/
+.vscode/
