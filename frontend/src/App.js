@@ -1,46 +1,21 @@
 import { useState } from "react";
-import { getRecommendations } from "./api";
+import Login from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
 
-function App() {
-  const [productId, setProductId] = useState("");
-  const [recommendations, setRecommendations] = useState([]);
-  const [error, setError] = useState("");
+function App(){
 
-  const handleSubmit = async () => {
-    try {
-      const data = await getRecommendations(productId);
-      setRecommendations(data);
-      setError("");
-    } catch (err) {
-      setError("Invalid Product ID or backend error");
-      setRecommendations([]);
-    }
-  };
+  const [page,setPage] = useState("login");
+  const [user,setUser] = useState(null);
 
-  return (
-    <div style={{ padding: "40px" }}>
-      <h2>AI Enabled Recommendation Engine</h2>
+  if(page === "login")
+    return <Login setUser={setUser} setPage={setPage}/>
 
-      <input
-        type="number"
-        placeholder="Enter Product ID"
-        value={productId}
-        onChange={(e) => setProductId(e.target.value)}
-      />
+  if(page === "register")
+    return <Register setPage={setPage}/>
 
-      <button onClick={handleSubmit}>Get Recommendations</button>
+  return <Dashboard user={user}/>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {recommendations.length > 0 && (
-        <ul>
-          {recommendations.map((item, index) => (
-            <li key={index}>Recommended Product ID: {item}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
 }
 
 export default App;

@@ -1,10 +1,32 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/recommend";
+const API = "http://localhost:5000";
+
+export const loginUser = async (username,password) => {
+
+  const res = await axios.post(API+"/login",{
+    username,
+    password
+  });
+
+  return res.data;
+};
+
+export const registerUser = async (username,password) => {
+
+  const res = await axios.post(API+"/register",{
+    username,
+    password
+  });
+
+  return res.data;
+};
 
 export const getRecommendations = async (productId) => {
-  const response = await axios.post(API_URL, {
-    product_id: productId,
+
+  const res = await axios.post(API+"/recommend",{
+    product_id: productId
   });
-  return response.data.recommended_products;
+
+  return res.data.recommended_products;
 };
